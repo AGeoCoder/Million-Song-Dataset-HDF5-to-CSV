@@ -1,5 +1,6 @@
-# Million-Song-Dataset-HDF5-to-CSV
-Million Song Dataset HDF5 to CSV Converter
+# Million-Song-Dataset-HDF5-to-CSV, 
+
+Million Song Dataset HDF5 to CSV Converter, 
 Alexis Greenstreet
 
 The code in "msdHDF5toCSV.py" is designed to convert the HDF5 files of the Million Song Dataset
