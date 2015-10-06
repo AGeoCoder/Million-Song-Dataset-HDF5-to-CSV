@@ -43,12 +43,12 @@ import re
 
 class Song:
     songCount = 0
-    songDictionary = {}
+    # songDictionary = {}
 
     def __init__(self, songID):
         self.id = songID
         Song.songCount += 1
-        Song.songDictionary[songID] = self
+        # Song.songDictionary[songID] = self
 
         self.albumName = None
         self.albumID = None
@@ -78,7 +78,7 @@ class Song:
 
 
 def main():
-    outputFile1 = open('workfile.txt', 'w')
+    outputFile1 = open('SongCSV.csv', 'w')
     csvRowString = ""
 
     #################################################
@@ -95,9 +95,9 @@ def main():
 
             csvAttributeString = raw_input("\n\nIn what order would you like the colums of the CSV file?\n" +
                 "Please delineate with commas. The options are: " +
-                "SongID, AlbumName, AlbumID, ArtistID, ArtistLatitude, ArtistLocation, ArtistLongitude,"+
+                "AlbumName, AlbumID, ArtistID, ArtistLatitude, ArtistLocation, ArtistLongitude,"+
                 " ArtistName, Danceability, Duration, KeySignature, KeySignatureConfidence, Tempo," +
-                " TimeSignature, TimeSignatureConfidence, Title, and Year.\n\n" +
+                " SongID, TimeSignature, TimeSignatureConfidence, Title, and Year.\n\n" +
                 "For example, you may write \"Title, Tempo, Duration\"...\n\n" +
                 "...or exit by typing 'exit'.\n\n")
 
@@ -108,9 +108,8 @@ def main():
             for attribute in csvAttributeList:
                 # print "Here is the attribute: " + attribute + " \n"
 
-                if attribute == 'SongID'.lower():
-                    csvRowString += "SongID"
-                elif attribute == 'AlbumID'.lower():
+
+                if attribute == 'AlbumID'.lower():
                     csvRowString += 'AlbumID'
                 elif attribute == 'AlbumName'.lower():
                     csvRowString += 'AlbumName'
@@ -132,6 +131,8 @@ def main():
                     csvRowString += 'KeySignature'
                 elif attribute == 'KeySignatureConfidence'.lower():
                     csvRowString += 'KeySignatureConfidence'
+                elif attribute == 'SongID'.lower():
+                    csvRowString += "SongID"
                 elif attribute == 'Tempo'.lower():
                     csvRowString += 'Tempo'
                 elif attribute == 'TimeSignature'.lower():
@@ -173,6 +174,7 @@ def main():
         csvAttributeList = re.split('\W+', csvRowString)
         for i, v in enumerate(csvAttributeList):
             csvAttributeList[i] = csvAttributeList[i].lower()
+        outputFile1.write("SongNumber,");
         outputFile1.write(csvRowString + "\n");
         csvRowString = ""  
 
@@ -218,19 +220,20 @@ def main():
             song.title = str(hdf5_getters.get_title(songH5File))
             song.year = str(hdf5_getters.get_year(songH5File))
 
+            #print song count
+            csvRowString += str(song.songCount) + ","
+
             for attribute in csvAttributeList:
                 # print "Here is the attribute: " + attribute + " \n"
 
-                if attribute == 'SongID'.lower():
-                    csvRowString += song.id
-                elif attribute == 'AlbumID'.lower():
+                if attribute == 'AlbumID'.lower():
                     csvRowString += song.albumID
                 elif attribute == 'AlbumName'.lower():
                     albumName = song.albumName
                     albumName = albumName.replace(',',"")
-                    csvRowString += albumName
+                    csvRowString += "\"" + albumName + "\""
                 elif attribute == 'ArtistID'.lower():
-                    csvRowString += song.artistID
+                    csvRowString += "\"" + song.artistID + "\""
                 elif attribute == 'ArtistLatitude'.lower():
                     latitude = song.artistLatitude
                     if latitude == 'nan':
@@ -239,14 +242,14 @@ def main():
                 elif attribute == 'ArtistLocation'.lower():
                     location = song.artistLocation
                     location = location.replace(',','')
-                    csvRowString += location
+                    csvRowString += "\"" + location + "\""
                 elif attribute == 'ArtistLongitude'.lower():
                     longitude = song.artistLongitude
                     if longitude == 'nan':
                         longitude = ''
                     csvRowString += longitude                
                 elif attribute == 'ArtistName'.lower():
-                    csvRowString += song.artistName                  
+                    csvRowString += "\"" + song.artistName + "\""                
                 elif attribute == 'Danceability'.lower():
                     csvRowString += song.danceability
                 elif attribute == 'Duration'.lower():
@@ -256,6 +259,8 @@ def main():
                 elif attribute == 'KeySignatureConfidence'.lower():
                     # print "key sig conf: " + song.timeSignatureConfidence                                 
                     csvRowString += song.keySignatureConfidence
+                elif attribute == 'SongID'.lower():
+                    csvRowString += "\"" + song.id + "\""
                 elif attribute == 'Tempo'.lower():
                     # print "Tempo: " + song.tempo
                     csvRowString += song.tempo
@@ -265,7 +270,7 @@ def main():
                     # print "time sig conf: " + song.timeSignatureConfidence                                   
                     csvRowString += song.timeSignatureConfidence
                 elif attribute == 'Title'.lower():
-                    csvRowString += song.title
+                    csvRowString += "\"" + song.title + "\""
                 elif attribute == 'Year'.lower():
                     csvRowString += song.year
                 else:
@@ -285,6 +290,3 @@ def main():
     outputFile1.close()
 	
 main()
-	
-
-
