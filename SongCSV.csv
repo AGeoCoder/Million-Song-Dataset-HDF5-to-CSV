@@ -1,0 +1,12 @@
+SongNumber,SongID,AlbumID,AlbumName,ArtistID,ArtistLatitude,ArtistLocation,ArtistLongitude,ArtistName,Danceability,Duration,KeySignature,KeySignatureConfidence,Tempo,TimeSignature,TimeSignatureConfidence,Title,Year
+1,"SOMZWCG12A8C13C480",300848,"Fear Itself","ARD7TVE1187B99BFB1",,"California - LA",,"Casual",0.0,218.93179,1,0.736,92.198,4,0.778,"I Didn't Mean To",0
+2,"SOCIWDW12A8C13D406",300822,"Dimensions","ARMJAGH1187FB546F3",35.14968,"Memphis TN",-90.04892,"The Box Tops",0.0,148.03546,6,0.169,121.274,4,0.384,"Soul Deep",1969
+3,"SOXVLOJ12AB0189215",514953,"Las Numero 1 De La Sonora Santanera","ARKRRTF1187B9984DA",,"",,"Sonora Santanera",0.0,177.47546,8,0.643,100.07,1,0.0,"Amor De Cabaret",0
+4,"SONHOTT12A8C13493C",287650,"Friend Or Foe","AR7G5I41187FB4CE6C",,"London England",,"Adam Ant",0.0,233.40363,0,0.751,119.293,4,0.0,"Something Girls",1982
+5,"SOFSOCN12A8C143F5D",611336,"Muertos Vivos","ARXR32B1187FB57099",,"",,"Gob",0.0,209.60608,2,0.092,129.738,4,0.562,"Face the Ashes",2007
+6,"SOYMRWW12A6D4FAB14",41838,"Ordinary Day","ARKFYS91187B98E58F",,"",,"Jeff And Sheri Easter",0.0,267.7024,5,0.635,147.782,3,0.454,"The Moon And I (Ordinary Day Album Version)",0
+7,"SOMJBYD12A6D4F8557",25824,"Da Ghetto Psychic","ARD0S291187B9B7BF5",,"Ohio",,"Rated R",0.0,114.78159,1,0.0,111.787,1,0.0,"Keepin It Real (Skit)",0
+8,"SOHKNRJ12A6701D1F8",8876,"Gin & Phonic","AR10USD1187B99F3F1",,"Burlington Ontario Canada",,"Tweeterfriendly Music",0.0,189.57016,4,0.0,101.43,3,0.408,"Drop of Rain",0
+9,"SOIAZJW12AB01853F1",358182,"Pink World","AR8ZCNI1187B9A069B",,"",,"Planet P Project",0.0,269.81832,4,0.717,86.643,4,0.487,"Pink World",1984
+10,"SOUDSGM12AC9618304",692313,"Superinstrumental","ARNTLGG11E2835DDB9",,"",,"Clp",0.0,266.39628,7,0.053,114.041,4,0.878,"Insatiable (Instrumental Version)",0
+11,"SOQHXMF12AB0182363",539081,"I Need You","ARGSJW91187B9B1D6B",35.21962,"North Carolina",-80.01955,"JennyAnyKind",0.0,218.77506,5,0.354,146.765,1,0.0,"Young Boy Blues",0
