@@ -4,6 +4,8 @@ Alexis Greenstreet (October 4, 2015) University of Wisconsin-Madison
 This code is designed to convert the HDF5 files of the Million Song Dataset
 to a CSV by extracting various song properties.
 
+The script writes to a "SongCSV.csv" in the directory containing this script.
+
 Please note that in the current form, this code only extracts the following
 information from the HDF5 files:
 SongID, AlbumID, AlbumName, ArtistID, ArtistLatitude, ArtistLocation,
