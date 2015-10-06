@@ -6,11 +6,13 @@ Alexis Greenstreet
 The code in "msdHDF5toCSV.py" is designed to convert the HDF5 files of the Million Song Dataset
 to a CSV by extracting various song properties.
 
+The script writes to a "SongCSV.csv" in the directory containing this script.
+
 Please note that in the current form, this code only extracts the following
 information from the HDF5 files:
-SongID, AlbumID, AlbumName, ArtistID, ArtistLatitude, ArtistLocation,
+AlbumID, AlbumName, ArtistID, ArtistLatitude, ArtistLocation,
 ArtistLongitude, ArtistName, Danceability, Duration, KeySignature,
-KeySignatureConfidence, Tempo, TimeSignature, TimeSignatureConfidence,
+KeySignatureConfidence, SongID, Tempo, TimeSignature, TimeSignatureConfidence,
 Title, and Year.
 
 Additional Files:
