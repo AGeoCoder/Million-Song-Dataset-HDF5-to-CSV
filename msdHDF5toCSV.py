@@ -18,8 +18,8 @@ Thierry Bertin-Mahieux (2010) at Columbia University
 
 Credit:
 This HDF5 to CSV code makes use of the following example code provided
-at the Million Song Dataset website 
-(Home>Tutorial/Iterate Over All Songs, 
+at the Million Song Dataset website
+(Home>Tutorial/Iterate Over All Songs,
 http://labrosa.ee.columbia.edu/millionsong/pages/iterate-over-all-songs),
 Which gives users the following code to get all song titles:
 
@@ -76,7 +76,7 @@ class Song:
         print "Total Song Count %i" % Song.songCount
 
     def displaySong(self):
-        print "ID: %s" % self.id   
+        print "ID: %s" % self.id
 
 
 def main():
@@ -162,7 +162,7 @@ def main():
             outputFile1.write(csvRowString);
             csvRowString = ""
     #else, if you want to hard code the order of the csv file and not prompt
-    #the user, 
+    #the user,
     else:
         #################################################
         #change the order of the csv file here
@@ -178,7 +178,7 @@ def main():
             csvAttributeList[i] = csvAttributeList[i].lower()
         outputFile1.write("SongNumber,");
         outputFile1.write(csvRowString + "\n");
-        csvRowString = ""  
+        csvRowString = ""
 
     #################################################
 
@@ -190,9 +190,12 @@ def main():
     #################################################
 
     #FOR LOOP
-    for root, dirs, files in os.walk(basedir):        
-        files = glob.glob(os.path.join(root,'*'+ext))
+    for root, dirs, files in os.walk(basedir, topdown=False):
+        files = [ fi for fi in files if fi.endswith('.h5') ]
         for f in files:
+            globber = str(root+'/')
+            f = glob.glob(os.path.join(globber, f))
+            f = f[0]
             print f
 
             songH5File = hdf5_getters.open_h5_file_read(f)
@@ -249,9 +252,9 @@ def main():
                     longitude = song.artistLongitude
                     if longitude == 'nan':
                         longitude = ''
-                    csvRowString += longitude                
+                    csvRowString += longitude
                 elif attribute == 'ArtistName'.lower():
-                    csvRowString += "\"" + song.artistName + "\""                
+                    csvRowString += "\"" + song.artistName + "\""
                 elif attribute == 'Danceability'.lower():
                     csvRowString += song.danceability
                 elif attribute == 'Duration'.lower():
@@ -259,7 +262,7 @@ def main():
                 elif attribute == 'KeySignature'.lower():
                     csvRowString += song.keySignature
                 elif attribute == 'KeySignatureConfidence'.lower():
-                    # print "key sig conf: " + song.timeSignatureConfidence                                 
+                    # print "key sig conf: " + song.timeSignatureConfidence
                     csvRowString += song.keySignatureConfidence
                 elif attribute == 'SongID'.lower():
                     csvRowString += "\"" + song.id + "\""
@@ -269,7 +272,7 @@ def main():
                 elif attribute == 'TimeSignature'.lower():
                     csvRowString += song.timeSignature
                 elif attribute == 'TimeSignatureConfidence'.lower():
-                    # print "time sig conf: " + song.timeSignatureConfidence                                   
+                    # print "time sig conf: " + song.timeSignatureConfidence
                     csvRowString += song.timeSignatureConfidence
                 elif attribute == 'Title'.lower():
                     csvRowString += "\"" + song.title + "\""
@@ -290,5 +293,5 @@ def main():
             songH5File.close()
 
     outputFile1.close()
-	
+
 main()
