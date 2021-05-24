@@ -27,17 +27,17 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 
+import numpy as np
+import h5py
 
-import tables
-
-
-def open_h5_file_read(h5filename):
+def open_h5_file_read(h5_file):
     """
-    Open an existing H5 in read mode.
-    Same function as in hdf5_utils, here so we avoid one import
+    loads the songs attributes from the metadata key
     """
-    return tables.openFile(h5filename, mode='r')
+    return h5py.File(h5_file)
 
+# def get_song_id(songH5File):
+#     return songH5File['metadata']['songs'][]
 
 def get_num_songs(h5):
     """
@@ -50,97 +50,97 @@ def get_artist_familiarity(h5,songidx=0):
     """
     Get artist familiarity from a HDF5 song file, by default the first song in it
     """
-    return h5.root.metadata.songs.cols.artist_familiarity[songidx]
+    return h5['metadata']['songs']['artist_familiarity'][songidx]
 
 def get_artist_hotttnesss(h5,songidx=0):
     """
     Get artist hotttnesss from a HDF5 song file, by default the first song in it
     """
-    return h5.root.metadata.songs.cols.artist_hotttnesss[songidx]
+    return h5['metadata']['songs']['artist_hotttnesss'][songidx]
 
 def get_artist_id(h5,songidx=0):
     """
     Get artist id from a HDF5 song file, by default the first song in it
     """
-    return h5.root.metadata.songs.cols.artist_id[songidx]
+    return h5['metadata']['songs']['artist_id'][songidx]
 
 def get_artist_mbid(h5,songidx=0):
     """
     Get artist musibrainz id from a HDF5 song file, by default the first song in it
     """
-    return h5.root.metadata.songs.cols.artist_mbid[songidx]
+    return h5['metadata']['songs']['artist_mbid'][songidx]
 
 def get_artist_playmeid(h5,songidx=0):
     """
     Get artist playme id from a HDF5 song file, by default the first song in it
     """
-    return h5.root.metadata.songs.cols.artist_playmeid[songidx]
+    return h5['metadata']['songs']['artist_playmeid'][songidx]
 
 def get_artist_7digitalid(h5,songidx=0):
     """
     Get artist 7digital id from a HDF5 song file, by default the first song in it
     """
-    return h5.root.metadata.songs.cols.artist_7digitalid[songidx]
+    return h5['metadata']['songs']['artist_7digitalid'][songidx]
 
 def get_artist_latitude(h5,songidx=0):
     """
     Get artist latitude from a HDF5 song file, by default the first song in it
     """
-    return h5.root.metadata.songs.cols.artist_latitude[songidx]
+    return h5['metadata']['songs']['artist_latitude'][songidx]
 
 def get_artist_longitude(h5,songidx=0):
     """
     Get artist longitude from a HDF5 song file, by default the first song in it
     """
-    return h5.root.metadata.songs.cols.artist_longitude[songidx]
+    return h5['metadata']['songs']['artist_longitude'][songidx]
 
 def get_artist_location(h5,songidx=0):
     """
     Get artist location from a HDF5 song file, by default the first song in it
     """
-    return h5.root.metadata.songs.cols.artist_location[songidx]
+    return h5['metadata']['songs']['artist_location'][songidx]
 
 def get_artist_name(h5,songidx=0):
     """
     Get artist name from a HDF5 song file, by default the first song in it
     """
-    return h5.root.metadata.songs.cols.artist_name[songidx]
+    return h5['metadata']['songs']['artist_name'][songidx]
 
 def get_release(h5,songidx=0):
     """
     Get release from a HDF5 song file, by default the first song in it
     """
-    return h5.root.metadata.songs.cols.release[songidx]
+    return h5['metadata']['songs']['release'][songidx]
 
 def get_release_7digitalid(h5,songidx=0):
     """
     Get release 7digital id from a HDF5 song file, by default the first song in it
     """
-    return h5.root.metadata.songs.cols.release_7digitalid[songidx]
+    return h5['metadata']['songs']['release_7digitalid'][songidx]
 
 def get_song_id(h5,songidx=0):
     """
     Get song id from a HDF5 song file, by default the first song in it
     """
-    return h5.root.metadata.songs.cols.song_id[songidx]
+    return h5['metadata']['songs']['song_id'][songidx]
 
 def get_song_hotttnesss(h5,songidx=0):
     """
     Get song hotttnesss from a HDF5 song file, by default the first song in it
     """
-    return h5.root.metadata.songs.cols.song_hotttnesss[songidx]
+    return h5['metadata']['songs']['song_hotttnesss'][songidx]
 
 def get_title(h5,songidx=0):
     """
     Get title from a HDF5 song file, by default the first song in it
     """
-    return h5.root.metadata.songs.cols.title[songidx]
+    return h5['metadata']['songs']['title'][songidx]
 
 def get_track_7digitalid(h5,songidx=0):
     """
     Get track 7digital id from a HDF5 song file, by default the first song in it
     """
-    return h5.root.metadata.songs.cols.track_7digitalid[songidx]
+    return h5['metadata']['songs']['track_7digitalid'][songidx]
 
 def get_similar_artists(h5,songidx=0):
     """
@@ -149,9 +149,9 @@ def get_similar_artists(h5,songidx=0):
     To get a regular numpy ndarray, cast the result to: numpy.array( )
     """
     if h5.root.metadata.songs.nrows == songidx + 1:
-        return h5.root.metadata.similar_artists[h5.root.metadata.songs.cols.idx_similar_artists[songidx]:]
-    return h5.root.metadata.similar_artists[h5.root.metadata.songs.cols.idx_similar_artists[songidx]:
-                                            h5.root.metadata.songs.cols.idx_similar_artists[songidx+1]]
+        return h5.root.metadata.similar_artists[h5['metadata']['songs']['idx_similar_artists'][songidx]:]
+    return h5.root.metadata.similar_artists[h5['metadata']['songs']['idx_similar_artists'][songidx]:
+                                            h5['metadata']['songs']['idx_similar_artists'][songidx+1]]
 
 def get_artist_terms(h5,songidx=0):
     """
@@ -160,9 +160,9 @@ def get_artist_terms(h5,songidx=0):
     To get a regular numpy ndarray, cast the result to: numpy.array( )
     """
     if h5.root.metadata.songs.nrows == songidx + 1:
-        return h5.root.metadata.artist_terms[h5.root.metadata.songs.cols.idx_artist_terms[songidx]:]
-    return h5.root.metadata.artist_terms[h5.root.metadata.songs.cols.idx_artist_terms[songidx]:
-                                            h5.root.metadata.songs.cols.idx_artist_terms[songidx+1]]
+        return h5.root.metadata.artist_terms[h5['metadata']['songs']['idx_artist_terms'][songidx]:]
+    return h5.root.metadata.artist_terms[h5['metadata']['songs']['idx_artist_terms'][songidx]:
+                                            h5['metadata']['songs']['idx_artist_terms'][songidx+1]]
 
 def get_artist_terms_freq(h5,songidx=0):
     """
@@ -171,9 +171,9 @@ def get_artist_terms_freq(h5,songidx=0):
     To get a regular numpy ndarray, cast the result to: numpy.array( )
     """
     if h5.root.metadata.songs.nrows == songidx + 1:
-        return h5.root.metadata.artist_terms_freq[h5.root.metadata.songs.cols.idx_artist_terms[songidx]:]
-    return h5.root.metadata.artist_terms_freq[h5.root.metadata.songs.cols.idx_artist_terms[songidx]:
-                                              h5.root.metadata.songs.cols.idx_artist_terms[songidx+1]]
+        return h5.root.metadata.artist_terms_freq[h5['metadata']['songs']['idx_artist_terms'][songidx]:]
+    return h5.root.metadata.artist_terms_freq[h5['metadata']['songs']['idx_artist_terms'][songidx]:
+                                              h5['metadata']['songs']['idx_artist_terms'][songidx+1]]
 
 def get_artist_terms_weight(h5,songidx=0):
     """
@@ -182,105 +182,105 @@ def get_artist_terms_weight(h5,songidx=0):
     To get a regular numpy ndarray, cast the result to: numpy.array( )
     """
     if h5.root.metadata.songs.nrows == songidx + 1:
-        return h5.root.metadata.artist_terms_weight[h5.root.metadata.songs.cols.idx_artist_terms[songidx]:]
-    return h5.root.metadata.artist_terms_weight[h5.root.metadata.songs.cols.idx_artist_terms[songidx]:
-                                                h5.root.metadata.songs.cols.idx_artist_terms[songidx+1]]
+        return h5.root.metadata.artist_terms_weight[h5['metadata']['songs']['idx_artist_terms'][songidx]:]
+    return h5.root.metadata.artist_terms_weight[h5['metadata']['songs']['idx_artist_terms'][songidx]:
+                                                h5['metadata']['songs']['idx_artist_terms'][songidx+1]]
 
 def get_analysis_sample_rate(h5,songidx=0):
     """
     Get analysis sample rate from a HDF5 song file, by default the first song in it
     """
-    return h5.root.analysis.songs.cols.analysis_sample_rate[songidx]
+    return h5['analysis']['songs']['analysis_sample_rate'][songidx]
 
 def get_audio_md5(h5,songidx=0):
     """
     Get audio MD5 from a HDF5 song file, by default the first song in it
     """
-    return h5.root.analysis.songs.cols.audio_md5[songidx]
+    return h5['analysis']['songs']['audio_md5'][songidx]
 
 def get_danceability(h5,songidx=0):
     """
     Get danceability from a HDF5 song file, by default the first song in it
     """
-    return h5.root.analysis.songs.cols.danceability[songidx]
+    return h5['analysis']['songs']['danceability'][songidx]
 
 def get_duration(h5,songidx=0):
     """
     Get duration from a HDF5 song file, by default the first song in it
     """
-    return h5.root.analysis.songs.cols.duration[songidx]
+    return h5['analysis']['songs']['duration'][songidx]
 
 def get_end_of_fade_in(h5,songidx=0):
     """
     Get end of fade in from a HDF5 song file, by default the first song in it
     """
-    return h5.root.analysis.songs.cols.end_of_fade_in[songidx]
+    return h5['analysis']['songs']['end_of_fade_in'][songidx]
 
 def get_energy(h5,songidx=0):
     """
     Get energy from a HDF5 song file, by default the first song in it
     """
-    return h5.root.analysis.songs.cols.energy[songidx]
+    return h5['analysis']['songs']['energy'][songidx]
 
 def get_key(h5,songidx=0):
     """
     Get key from a HDF5 song file, by default the first song in it
     """
-    return h5.root.analysis.songs.cols.key[songidx]
+    return h5['analysis']['songs']['key'][songidx]
 
 def get_key_confidence(h5,songidx=0):
     """
     Get key confidence from a HDF5 song file, by default the first song in it
     """
-    return h5.root.analysis.songs.cols.key_confidence[songidx]
+    return h5['analysis']['songs']['key_confidence'][songidx]
 
 def get_loudness(h5,songidx=0):
     """
     Get loudness from a HDF5 song file, by default the first song in it
     """
-    return h5.root.analysis.songs.cols.loudness[songidx]
+    return h5['analysis']['songs']['loudness'][songidx]
 
 def get_mode(h5,songidx=0):
     """
     Get mode from a HDF5 song file, by default the first song in it
     """
-    return h5.root.analysis.songs.cols.mode[songidx]
+    return h5['analysis']['songs']['mode'][songidx]
 
 def get_mode_confidence(h5,songidx=0):
     """
     Get mode confidence from a HDF5 song file, by default the first song in it
     """
-    return h5.root.analysis.songs.cols.mode_confidence[songidx]
+    return h5['analysis']['songs']['mode_confidence'][songidx]
 
 def get_start_of_fade_out(h5,songidx=0):
     """
     Get start of fade out from a HDF5 song file, by default the first song in it
     """
-    return h5.root.analysis.songs.cols.start_of_fade_out[songidx]
+    return h5['analysis']['songs']['start_of_fade_out'][songidx]
 
 def get_tempo(h5,songidx=0):
     """
     Get tempo from a HDF5 song file, by default the first song in it
     """
-    return h5.root.analysis.songs.cols.tempo[songidx]
+    return h5['analysis']['songs']['tempo'][songidx]
 
 def get_time_signature(h5,songidx=0):
     """
     Get signature from a HDF5 song file, by default the first song in it
     """
-    return h5.root.analysis.songs.cols.time_signature[songidx]
+    return h5['analysis']['songs']['time_signature'][songidx]
 
 def get_time_signature_confidence(h5,songidx=0):
     """
     Get signature confidence from a HDF5 song file, by default the first song in it
     """
-    return h5.root.analysis.songs.cols.time_signature_confidence[songidx]
+    return h5['analysis']['songs']['time_signature_confidence'][songidx]
 
 def get_track_id(h5,songidx=0):
     """
     Get track id from a HDF5 song file, by default the first song in it
     """
-    return h5.root.analysis.songs.cols.track_id[songidx]
+    return h5['analysis']['songs']['track_id'][songidx]
 
 def get_segments_start(h5,songidx=0):
     """
@@ -289,9 +289,9 @@ def get_segments_start(h5,songidx=0):
     To get a regular numpy ndarray, cast the result to: numpy.array( )
     """
     if h5.root.analysis.songs.nrows == songidx + 1:
-        return h5.root.analysis.segments_start[h5.root.analysis.songs.cols.idx_segments_start[songidx]:]
-    return h5.root.analysis.segments_start[h5.root.analysis.songs.cols.idx_segments_start[songidx]:
-                                           h5.root.analysis.songs.cols.idx_segments_start[songidx+1]]
+        return h5.root.analysis.segments_start[h5['analysis']['songs']['idx_segments_start'][songidx]:]
+    return h5.root.analysis.segments_start[h5['analysis']['songs']['idx_segments_start'][songidx]:
+                                           h5['analysis']['songs']['idx_segments_start'][songidx+1]]
     
 def get_segments_confidence(h5,songidx=0):
     """
@@ -300,9 +300,9 @@ def get_segments_confidence(h5,songidx=0):
     To get a regular numpy ndarray, cast the result to: numpy.array( )
     """
     if h5.root.analysis.songs.nrows == songidx + 1:
-        return h5.root.analysis.segments_confidence[h5.root.analysis.songs.cols.idx_segments_confidence[songidx]:]
-    return h5.root.analysis.segments_confidence[h5.root.analysis.songs.cols.idx_segments_confidence[songidx]:
-                                                h5.root.analysis.songs.cols.idx_segments_confidence[songidx+1]]
+        return h5.root.analysis.segments_confidence[h5['analysis']['songs']['idx_segments_confidence'][songidx]:]
+    return h5.root.analysis.segments_confidence[h5['analysis']['songs']['idx_segments_confidence'][songidx]:
+                                                h5['analysis']['songs']['idx_segments_confidence'][songidx+1]]
 
 def get_segments_pitches(h5,songidx=0):
     """
@@ -311,9 +311,9 @@ def get_segments_pitches(h5,songidx=0):
     To get a regular numpy ndarray, cast the result to: numpy.array( )
     """
     if h5.root.analysis.songs.nrows == songidx + 1:
-        return h5.root.analysis.segments_pitches[h5.root.analysis.songs.cols.idx_segments_pitches[songidx]:,:]
-    return h5.root.analysis.segments_pitches[h5.root.analysis.songs.cols.idx_segments_pitches[songidx]:
-                                             h5.root.analysis.songs.cols.idx_segments_pitches[songidx+1],:]
+        return h5.root.analysis.segments_pitches[h5['analysis']['songs']['idx_segments_pitches'][songidx]:,:]
+    return h5.root.analysis.segments_pitches[h5['analysis']['songs']['idx_segments_pitches'][songidx]:
+                                             h5['analysis']['songs']['idx_segments_pitches'][songidx+1],:]
 
 def get_segments_timbre(h5,songidx=0):
     """
@@ -322,9 +322,9 @@ def get_segments_timbre(h5,songidx=0):
     To get a regular numpy ndarray, cast the result to: numpy.array( )
     """
     if h5.root.analysis.songs.nrows == songidx + 1:
-        return h5.root.analysis.segments_timbre[h5.root.analysis.songs.cols.idx_segments_timbre[songidx]:,:]
-    return h5.root.analysis.segments_timbre[h5.root.analysis.songs.cols.idx_segments_timbre[songidx]:
-                                            h5.root.analysis.songs.cols.idx_segments_timbre[songidx+1],:]
+        return h5.root.analysis.segments_timbre[h5['analysis']['songs']['idx_segments_timbre'][songidx]:,:]
+    return h5.root.analysis.segments_timbre[h5['analysis']['songs']['idx_segments_timbre'][songidx]:
+                                            h5['analysis']['songs']['idx_segments_timbre'][songidx+1],:]
 
 def get_segments_loudness_max(h5,songidx=0):
     """
@@ -333,9 +333,9 @@ def get_segments_loudness_max(h5,songidx=0):
     To get a regular numpy ndarray, cast the result to: numpy.array( )
     """
     if h5.root.analysis.songs.nrows == songidx + 1:
-        return h5.root.analysis.segments_loudness_max[h5.root.analysis.songs.cols.idx_segments_loudness_max[songidx]:]
-    return h5.root.analysis.segments_loudness_max[h5.root.analysis.songs.cols.idx_segments_loudness_max[songidx]:
-                                                  h5.root.analysis.songs.cols.idx_segments_loudness_max[songidx+1]]
+        return h5.root.analysis.segments_loudness_max[h5['analysis']['songs']['idx_segments_loudness_max'][songidx]:]
+    return h5.root.analysis.segments_loudness_max[h5['analysis']['songs']['idx_segments_loudness_max'][songidx]:
+                                                  h5['analysis']['songs']['idx_segments_loudness_max'][songidx+1]]
 
 def get_segments_loudness_max_time(h5,songidx=0):
     """
@@ -344,9 +344,9 @@ def get_segments_loudness_max_time(h5,songidx=0):
     To get a regular numpy ndarray, cast the result to: numpy.array( )
     """
     if h5.root.analysis.songs.nrows == songidx + 1:
-        return h5.root.analysis.segments_loudness_max_time[h5.root.analysis.songs.cols.idx_segments_loudness_max_time[songidx]:]
-    return h5.root.analysis.segments_loudness_max_time[h5.root.analysis.songs.cols.idx_segments_loudness_max_time[songidx]:
-                                                       h5.root.analysis.songs.cols.idx_segments_loudness_max_time[songidx+1]]
+        return h5.root.analysis.segments_loudness_max_time[h5['analysis']['songs']['idx_segments_loudness_max_time'][songidx]:]
+    return h5.root.analysis.segments_loudness_max_time[h5['analysis']['songs']['idx_segments_loudness_max_time'][songidx]:
+                                                       h5['analysis']['songs']['idx_segments_loudness_max_time'][songidx+1]]
 
 def get_segments_loudness_start(h5,songidx=0):
     """
@@ -355,9 +355,9 @@ def get_segments_loudness_start(h5,songidx=0):
     To get a regular numpy ndarray, cast the result to: numpy.array( )
     """
     if h5.root.analysis.songs.nrows == songidx + 1:
-        return h5.root.analysis.segments_loudness_start[h5.root.analysis.songs.cols.idx_segments_loudness_start[songidx]:]
-    return h5.root.analysis.segments_loudness_start[h5.root.analysis.songs.cols.idx_segments_loudness_start[songidx]:
-                                                    h5.root.analysis.songs.cols.idx_segments_loudness_start[songidx+1]]
+        return h5.root.analysis.segments_loudness_start[h5['analysis']['songs']['idx_segments_loudness_start'][songidx]:]
+    return h5.root.analysis.segments_loudness_start[h5['analysis']['songs']['idx_segments_loudness_start'][songidx]:
+                                                    h5['analysis']['songs']['idx_segments_loudness_start'][songidx+1]]
 
 def get_sections_start(h5,songidx=0):
     """
@@ -366,9 +366,9 @@ def get_sections_start(h5,songidx=0):
     To get a regular numpy ndarray, cast the result to: numpy.array( )
     """
     if h5.root.analysis.songs.nrows == songidx + 1:
-        return h5.root.analysis.sections_start[h5.root.analysis.songs.cols.idx_sections_start[songidx]:]
-    return h5.root.analysis.sections_start[h5.root.analysis.songs.cols.idx_sections_start[songidx]:
-                                           h5.root.analysis.songs.cols.idx_sections_start[songidx+1]]
+        return h5.root.analysis.sections_start[h5['analysis']['songs']['idx_sections_start'][songidx]:]
+    return h5.root.analysis.sections_start[h5['analysis']['songs']['idx_sections_start'][songidx]:
+                                           h5['analysis']['songs']['idx_sections_start'][songidx+1]]
 
 def get_sections_confidence(h5,songidx=0):
     """
@@ -377,9 +377,9 @@ def get_sections_confidence(h5,songidx=0):
     To get a regular numpy ndarray, cast the result to: numpy.array( )
     """
     if h5.root.analysis.songs.nrows == songidx + 1:
-        return h5.root.analysis.sections_confidence[h5.root.analysis.songs.cols.idx_sections_confidence[songidx]:]
-    return h5.root.analysis.sections_confidence[h5.root.analysis.songs.cols.idx_sections_confidence[songidx]:
-                                                h5.root.analysis.songs.cols.idx_sections_confidence[songidx+1]]
+        return h5.root.analysis.sections_confidence[h5['analysis']['songs']['idx_sections_confidence'][songidx]:]
+    return h5.root.analysis.sections_confidence[h5['analysis']['songs']['idx_sections_confidence'][songidx]:
+                                                h5['analysis']['songs']['idx_sections_confidence'][songidx+1]]
 
 def get_beats_start(h5,songidx=0):
     """
@@ -388,9 +388,9 @@ def get_beats_start(h5,songidx=0):
     To get a regular numpy ndarray, cast the result to: numpy.array( )
     """
     if h5.root.analysis.songs.nrows == songidx + 1:
-        return h5.root.analysis.beats_start[h5.root.analysis.songs.cols.idx_beats_start[songidx]:]
-    return h5.root.analysis.beats_start[h5.root.analysis.songs.cols.idx_beats_start[songidx]:
-                                        h5.root.analysis.songs.cols.idx_beats_start[songidx+1]]
+        return h5.root.analysis.beats_start[h5['analysis']['songs']['idx_beats_start'][songidx]:]
+    return h5.root.analysis.beats_start[h5['analysis']['songs']['idx_beats_start'][songidx]:
+                                        h5['analysis']['songs']['idx_beats_start'][songidx+1]]
 
 def get_beats_confidence(h5,songidx=0):
     """
@@ -399,9 +399,9 @@ def get_beats_confidence(h5,songidx=0):
     To get a regular numpy ndarray, cast the result to: numpy.array( )
     """
     if h5.root.analysis.songs.nrows == songidx + 1:
-        return h5.root.analysis.beats_confidence[h5.root.analysis.songs.cols.idx_beats_confidence[songidx]:]
-    return h5.root.analysis.beats_confidence[h5.root.analysis.songs.cols.idx_beats_confidence[songidx]:
-                                             h5.root.analysis.songs.cols.idx_beats_confidence[songidx+1]]
+        return h5.root.analysis.beats_confidence[h5['analysis']['songs']['idx_beats_confidence'][songidx]:]
+    return h5.root.analysis.beats_confidence[h5['analysis']['songs']['idx_beats_confidence'][songidx]:
+                                             h5['analysis']['songs']['idx_beats_confidence'][songidx+1]]
 
 def get_bars_start(h5,songidx=0):
     """
@@ -410,9 +410,9 @@ def get_bars_start(h5,songidx=0):
     To get a regular numpy ndarray, cast the result to: numpy.array( )
     """
     if h5.root.analysis.songs.nrows == songidx + 1:
-        return h5.root.analysis.bars_start[h5.root.analysis.songs.cols.idx_bars_start[songidx]:]
-    return h5.root.analysis.bars_start[h5.root.analysis.songs.cols.idx_bars_start[songidx]:
-                                       h5.root.analysis.songs.cols.idx_bars_start[songidx+1]]
+        return h5.root.analysis.bars_start[h5['analysis']['songs']['idx_bars_start'][songidx]:]
+    return h5.root.analysis.bars_start[h5['analysis']['songs']['idx_bars_start'][songidx]:
+                                       h5['analysis']['songs']['idx_bars_start'][songidx+1]]
 
 def get_bars_confidence(h5,songidx=0):
     """
@@ -421,9 +421,9 @@ def get_bars_confidence(h5,songidx=0):
     To get a regular numpy ndarray, cast the result to: numpy.array( )
     """
     if h5.root.analysis.songs.nrows == songidx + 1:
-        return h5.root.analysis.bars_confidence[h5.root.analysis.songs.cols.idx_bars_confidence[songidx]:]
-    return h5.root.analysis.bars_confidence[h5.root.analysis.songs.cols.idx_bars_confidence[songidx]:
-                                            h5.root.analysis.songs.cols.idx_bars_confidence[songidx+1]]
+        return h5.root.analysis.bars_confidence[h5['analysis']['songs']['idx_bars_confidence'][songidx]:]
+    return h5.root.analysis.bars_confidence[h5['analysis']['songs']['idx_bars_confidence'][songidx]:
+                                            h5['analysis']['songs']['idx_bars_confidence'][songidx+1]]
 
 def get_tatums_start(h5,songidx=0):
     """
@@ -432,9 +432,9 @@ def get_tatums_start(h5,songidx=0):
     To get a regular numpy ndarray, cast the result to: numpy.array( )
     """
     if h5.root.analysis.songs.nrows == songidx + 1:
-        return h5.root.analysis.tatums_start[h5.root.analysis.songs.cols.idx_tatums_start[songidx]:]
-    return h5.root.analysis.tatums_start[h5.root.analysis.songs.cols.idx_tatums_start[songidx]:
-                                         h5.root.analysis.songs.cols.idx_tatums_start[songidx+1]]
+        return h5.root.analysis.tatums_start[h5['analysis']['songs']['idx_tatums_start'][songidx]:]
+    return h5.root.analysis.tatums_start[h5['analysis']['songs']['idx_tatums_start'][songidx]:
+                                         h5['analysis']['songs']['idx_tatums_start'][songidx+1]]
 
 def get_tatums_confidence(h5,songidx=0):
     """
@@ -443,9 +443,9 @@ def get_tatums_confidence(h5,songidx=0):
     To get a regular numpy ndarray, cast the result to: numpy.array( )
     """
     if h5.root.analysis.songs.nrows == songidx + 1:
-        return h5.root.analysis.tatums_confidence[h5.root.analysis.songs.cols.idx_tatums_confidence[songidx]:]
-    return h5.root.analysis.tatums_confidence[h5.root.analysis.songs.cols.idx_tatums_confidence[songidx]:
-                                              h5.root.analysis.songs.cols.idx_tatums_confidence[songidx+1]]
+        return h5.root.analysis.tatums_confidence[h5['analysis']['songs']['idx_tatums_confidence'][songidx]:]
+    return h5.root.analysis.tatums_confidence[h5['analysis']['songs']['idx_tatums_confidence'][songidx]:
+                                              h5['analysis']['songs']['idx_tatums_confidence'][songidx+1]]
 
 def get_artist_mbtags(h5,songidx=0):
     """
@@ -454,9 +454,9 @@ def get_artist_mbtags(h5,songidx=0):
     To get a regular numpy ndarray, cast the result to: numpy.array( )
     """
     if h5.root.musicbrainz.songs.nrows == songidx + 1:
-        return h5.root.musicbrainz.artist_mbtags[h5.root.musicbrainz.songs.cols.idx_artist_mbtags[songidx]:]
-    return h5.root.musicbrainz.artist_mbtags[h5.root.metadata.songs.cols.idx_artist_mbtags[songidx]:
-                                             h5.root.metadata.songs.cols.idx_artist_mbtags[songidx+1]]
+        return h5.root.musicbrainz.artist_mbtags[h5['musicbrainz']['songs']['idx_artist_mbtags'][songidx]:]
+    return h5.root.musicbrainz.artist_mbtags[h5['metadata']['songs']['idx_artist_mbtags'][songidx]:
+                                             h5['metadata']['songs']['idx_artist_mbtags'][songidx+1]]
 
 def get_artist_mbtags_count(h5,songidx=0):
     """
@@ -465,12 +465,12 @@ def get_artist_mbtags_count(h5,songidx=0):
     To get a regular numpy ndarray, cast the result to: numpy.array( )
     """
     if h5.root.musicbrainz.songs.nrows == songidx + 1:
-        return h5.root.musicbrainz.artist_mbtags_count[h5.root.musicbrainz.songs.cols.idx_artist_mbtags[songidx]:]
-    return h5.root.musicbrainz.artist_mbtags_count[h5.root.metadata.songs.cols.idx_artist_mbtags[songidx]:
-                                                   h5.root.metadata.songs.cols.idx_artist_mbtags[songidx+1]]
+        return h5.root.musicbrainz.artist_mbtags_count[h5['musicbrainz']['songs']['idx_artist_mbtags'][songidx]:]
+    return h5.root.musicbrainz.artist_mbtags_count[h5['metadata']['songs']['idx_artist_mbtags'][songidx]:
+                                                   h5['metadata']['songs']['idx_artist_mbtags'][songidx+1]]
 
 def get_year(h5,songidx=0):
     """
     Get release year from a HDF5 song file, by default the first song in it
     """
-    return h5.root.musicbrainz.songs.cols.year[songidx]
+    return h5['musicbrainz']['songs']['year'][songidx]    
