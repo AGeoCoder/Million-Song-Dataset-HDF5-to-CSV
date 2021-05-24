@@ -31,9 +31,9 @@ I had significant difficulties installing NumPy and PyTables, so I eventually de
 If you choose to not use an IDE, you may need a C and FORTRAN compiler to install NumPy and/or PyTables. If you are using Windows, you may be interested in the Minimalist GNU for Windows project: http://www.mingw.org/.
 
 ## Run
-1. Make sure you have the required packages, or you can install using
+1. Make sure you have the required packages, or you can install using<br>
     `pip install -r requirements.txt`
-2. Enter the path to the songs dataset using environment variable (Default: 'MillionSongSubset')
+2. Enter the path to the songs dataset using environment variable (Default: 'MillionSongSubset')<br>
     `export dataset_path="<path-to-dataset>"`
-3. Run msdHDF5toCSV script
+3. Run msdHDF5toCSV script<br>
     `python msdHDF5toCSV.py`
