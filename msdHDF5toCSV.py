@@ -71,6 +71,10 @@ class Song:
         self.timeSignatureConfidence = None
         self.title = None
         self.year = None
+        self.energy = None
+        self.loudness = None
+        self.mode = None
+        self.modeConfidence = None
 
     def displaySongCount(self):
         print("Total Song Count %i" % Song.songCount)
@@ -165,10 +169,11 @@ def main():
         #################################################
         #change the order of the csv file here
         #Default is to list all available attributes (in alphabetical order)
-        csvRowString = ("SongID,AlbumID,AlbumName,ArtistID,ArtistLatitude,ArtistLocation,"+
-            "ArtistLongitude,ArtistName,Danceability,Duration,KeySignature,"+
-            "KeySignatureConfidence,Tempo,TimeSignature,TimeSignatureConfidence,"+
-            "Title,Year")
+        csvRowString = ("SongID,Title,AlbumID,AlbumName,ArtistID,ArtistName,Duration,"+
+            "ArtistLatitude,ArtistLongitude,ArtistLocation,"+
+            "Danceability,Tempo,Popularity,Energy,Loudness,"+
+            "KeySignature,KeySignatureConfidence,TimeSignature,TimeSignatureConfidence,"+
+            "Mode,ModeConfidence,Year")
         #################################################
 
         csvAttributeList = re.split('\W+', csvRowString)
@@ -195,11 +200,6 @@ def main():
 
             songH5File = hdf5_getters.open_h5_file_read(f)
             song = Song(str(hdf5_getters.get_song_id(songH5File)))
-
-            testDanceability = hdf5_getters.get_danceability(songH5File)
-            # print type(testDanceability)
-            # print ("Here is the danceability: ") + str(testDanceability)
-
             song.artistID = str(hdf5_getters.get_artist_id(songH5File))
             song.albumID = str(hdf5_getters.get_release_7digitalid(songH5File))
             song.albumName = str(hdf5_getters.get_release(songH5File))
@@ -209,25 +209,38 @@ def main():
             song.artistName = str(hdf5_getters.get_artist_name(songH5File))
             song.danceability = str(hdf5_getters.get_danceability(songH5File))
             song.duration = str(hdf5_getters.get_duration(songH5File))
-            # song.setGenreList()
             song.keySignature = str(hdf5_getters.get_key(songH5File))
             song.keySignatureConfidence = str(hdf5_getters.get_key_confidence(songH5File))
-            # song.lyrics = None
-            # song.popularity = None
+            song.energy = str(hdf5_getters.get_energy(songH5File))
+            song.popularity = str(hdf5_getters.get_song_hotttnesss(songH5File))
             song.tempo = str(hdf5_getters.get_tempo(songH5File))
             song.timeSignature = str(hdf5_getters.get_time_signature(songH5File))
             song.timeSignatureConfidence = str(hdf5_getters.get_time_signature_confidence(songH5File))
             song.title = str(hdf5_getters.get_title(songH5File))
             song.year = str(hdf5_getters.get_year(songH5File))
+            song.loudness = str(hdf5_getters.get_loudness(songH5File))
+            song.mode = str(hdf5_getters.get_mode(songH5File))
+            song.modeConfidence = str(hdf5_getters.get_mode_confidence(songH5File))
+
 
             #print song count
             csvRowString += str(song.songCount) + ","
-
+            
             for attribute in csvAttributeList:
                 # print("Here is the attribute: " + attribute + " \n")
 
                 if attribute == 'AlbumID'.lower():
                     csvRowString += song.albumID
+                elif attribute == 'Energy'.lower():
+                    csvRowString += song.energy
+                elif attribute == 'Loudness'.lower():
+                    csvRowString += song.loudness
+                elif attribute == 'Mode'.lower():
+                    csvRowString += song.mode
+                elif attribute == 'ModeConfidence'.lower():
+                    csvRowString += song.modeConfidence
+                elif attribute == 'Popularity'.lower():
+                    csvRowString += song.popularity
                 elif attribute == 'AlbumName'.lower():
                     albumName = song.albumName
                     albumName = albumName.replace(',',"")
