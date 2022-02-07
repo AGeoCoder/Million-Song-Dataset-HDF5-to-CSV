@@ -51,7 +51,7 @@ class Song:
         self.id = songID
         Song.songCount += 1
         # Song.songDictionary[songID] = self
-
+        print('Songs count = '+str(Song.songCount), end='\r')
         self.albumName = None
         self.albumID = None
         self.artistID = None
@@ -71,12 +71,16 @@ class Song:
         self.timeSignatureConfidence = None
         self.title = None
         self.year = None
+        self.energy = None
+        self.loudness = None
+        self.mode = None
+        self.modeConfidence = None
 
     def displaySongCount(self):
-        print "Total Song Count %i" % Song.songCount
+        print("Total Song Count %i" % Song.songCount)
 
     def displaySong(self):
-        print "ID: %s" % self.id   
+        print("ID: %s" % self.id)
 
 
 def main():
@@ -92,10 +96,9 @@ def main():
     #################################################
     if prompt == True:
         while prompt:
-
             prompt = False
 
-            csvAttributeString = raw_input("\n\nIn what order would you like the colums of the CSV file?\n" +
+            csvAttributeString = input("\n\nIn what order would you like the colums of the CSV file?\n" +
                 "Please delineate with commas. The options are: " +
                 "AlbumName, AlbumID, ArtistID, ArtistLatitude, ArtistLocation, ArtistLongitude,"+
                 " ArtistName, Danceability, Duration, KeySignature, KeySignatureConfidence, Tempo," +
@@ -108,8 +111,7 @@ def main():
                 csvAttributeList[i] = csvAttributeList[i].lower()
 
             for attribute in csvAttributeList:
-                # print "Here is the attribute: " + attribute + " \n"
-
+                # print("Here is the attribute: " + attribute + " \n")
 
                 if attribute == 'AlbumID'.lower():
                     csvRowString += 'AlbumID'
@@ -149,9 +151,9 @@ def main():
                     sys.exit()
                 else:
                     prompt = True
-                    print "=============="
-                    print "I believe there has been an error with the input."
-                    print "=============="
+                    print("==============")
+                    print("I believe there has been an error with the input.")
+                    print("==============")
                     break
 
                 csvRowString += ","
@@ -159,7 +161,7 @@ def main():
             lastIndex = len(csvRowString)
             csvRowString = csvRowString[0:lastIndex-1]
             csvRowString += "\n"
-            outputFile1.write(csvRowString);
+            outputFile1.write(csvRowString)
             csvRowString = ""
     #else, if you want to hard code the order of the csv file and not prompt
     #the user, 
@@ -167,17 +169,18 @@ def main():
         #################################################
         #change the order of the csv file here
         #Default is to list all available attributes (in alphabetical order)
-        csvRowString = ("SongID,AlbumID,AlbumName,ArtistID,ArtistLatitude,ArtistLocation,"+
-            "ArtistLongitude,ArtistName,Danceability,Duration,KeySignature,"+
-            "KeySignatureConfidence,Tempo,TimeSignature,TimeSignatureConfidence,"+
-            "Title,Year")
+        csvRowString = ("SongID,Title,AlbumID,AlbumName,ArtistID,ArtistName,Duration,"+
+            "ArtistLatitude,ArtistLongitude,ArtistLocation,"+
+            "Danceability,Tempo,Popularity,Energy,Loudness,"+
+            "KeySignature,KeySignatureConfidence,TimeSignature,TimeSignatureConfidence,"+
+            "Mode,ModeConfidence,Year")
         #################################################
 
         csvAttributeList = re.split('\W+', csvRowString)
         for i, v in enumerate(csvAttributeList):
             csvAttributeList[i] = csvAttributeList[i].lower()
-        outputFile1.write("SongNumber,");
-        outputFile1.write(csvRowString + "\n");
+        outputFile1.write("SongNumber,")
+        outputFile1.write(csvRowString + "\n")
         csvRowString = ""  
 
     #################################################
@@ -185,23 +188,18 @@ def main():
 
     #Set the basedir here, the root directory from which the search
     #for files stored in a (hierarchical data structure) will originate
-    basedir = "." # "." As the default means the current directory
-    ext = ".H5" #Set the extension here. H5 is the extension for HDF5 files.
+    dataset_path = os.environ.get("dataset_path", "MillionSongSubset") # "." As the default means the current directory
+    ext = ".h5" #Set the extension here. H5 is the extension for HDF5 files.
     #################################################
 
     #FOR LOOP
-    for root, dirs, files in os.walk(basedir):        
+    for root, dirs, files in os.walk(dataset_path):        
         files = glob.glob(os.path.join(root,'*'+ext))
         for f in files:
-            print f
+            # print(f)
 
             songH5File = hdf5_getters.open_h5_file_read(f)
             song = Song(str(hdf5_getters.get_song_id(songH5File)))
-
-            testDanceability = hdf5_getters.get_danceability(songH5File)
-            # print type(testDanceability)
-            # print ("Here is the danceability: ") + str(testDanceability)
-
             song.artistID = str(hdf5_getters.get_artist_id(songH5File))
             song.albumID = str(hdf5_getters.get_release_7digitalid(songH5File))
             song.albumName = str(hdf5_getters.get_release(songH5File))
@@ -211,25 +209,38 @@ def main():
             song.artistName = str(hdf5_getters.get_artist_name(songH5File))
             song.danceability = str(hdf5_getters.get_danceability(songH5File))
             song.duration = str(hdf5_getters.get_duration(songH5File))
-            # song.setGenreList()
             song.keySignature = str(hdf5_getters.get_key(songH5File))
             song.keySignatureConfidence = str(hdf5_getters.get_key_confidence(songH5File))
-            # song.lyrics = None
-            # song.popularity = None
+            song.energy = str(hdf5_getters.get_energy(songH5File))
+            song.popularity = str(hdf5_getters.get_song_hotttnesss(songH5File))
             song.tempo = str(hdf5_getters.get_tempo(songH5File))
             song.timeSignature = str(hdf5_getters.get_time_signature(songH5File))
             song.timeSignatureConfidence = str(hdf5_getters.get_time_signature_confidence(songH5File))
             song.title = str(hdf5_getters.get_title(songH5File))
             song.year = str(hdf5_getters.get_year(songH5File))
+            song.loudness = str(hdf5_getters.get_loudness(songH5File))
+            song.mode = str(hdf5_getters.get_mode(songH5File))
+            song.modeConfidence = str(hdf5_getters.get_mode_confidence(songH5File))
+
 
             #print song count
             csvRowString += str(song.songCount) + ","
-
+            
             for attribute in csvAttributeList:
-                # print "Here is the attribute: " + attribute + " \n"
+                # print("Here is the attribute: " + attribute + " \n")
 
                 if attribute == 'AlbumID'.lower():
                     csvRowString += song.albumID
+                elif attribute == 'Energy'.lower():
+                    csvRowString += song.energy
+                elif attribute == 'Loudness'.lower():
+                    csvRowString += song.loudness
+                elif attribute == 'Mode'.lower():
+                    csvRowString += song.mode
+                elif attribute == 'ModeConfidence'.lower():
+                    csvRowString += song.modeConfidence
+                elif attribute == 'Popularity'.lower():
+                    csvRowString += song.popularity
                 elif attribute == 'AlbumName'.lower():
                     albumName = song.albumName
                     albumName = albumName.replace(',',"")

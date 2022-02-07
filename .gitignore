@@ -1,0 +1,4 @@
+env/
+MillionSongSubset/
+__pycache__
+.DS_STORE
